@@ -5,8 +5,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "hardhat/console.sol";
-
 contract SolidityTest is Ownable, ERC721 {
     uint public constant PRICE = 1 ether / 10;
     uint public constant MAX_SUPPLY = 1000;
@@ -23,7 +21,7 @@ contract SolidityTest is Ownable, ERC721 {
         _;
     }
 
-    modifier onlyWhenEnoughFundToMint(uint256 amount) {
+    modifier onlyWithEnoughFundToMint(uint256 amount) {
         require(amount * PRICE == msg.value, "Insufficient fund to mint");
         _;
     }
@@ -44,7 +42,7 @@ contract SolidityTest is Ownable, ERC721 {
         require(success);
     }
 
-    function mint(uint256 amount) ableToMintFor(amount) onlyWhenEnoughFundToMint(amount) withLimitPerTransaction(amount) external payable {
+    function mint(uint256 amount) ableToMintFor(amount) onlyWithEnoughFundToMint(amount) withLimitPerTransaction(amount) external payable {
         // YOUR CODE HERE
         
         for (uint256 index = 0; index < amount; index++) {
